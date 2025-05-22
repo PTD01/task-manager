@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private URL = 'http://localhost:5001/api/tasks';
+  private URL = 'https://taskapp-syz0.onrender.com/api/tasks'; // Use this for deployment
 
   constructor(private http: HttpClient) {}
 

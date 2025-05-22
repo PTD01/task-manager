@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private BASE_URL = 'http://localhost:5001/api/auth'; // Replace with your backend URL when deployed
+  //   private BASE_URL = 'http://localhost:5001/api/auth';
+  private BASE_URL = 'https://taskapp-syz0.onrender.com/api/auth'; // Use this for deployment
+  // Replace with your backend URL when deployed
 
   constructor(private http: HttpClient, private router: Router) {}
 
