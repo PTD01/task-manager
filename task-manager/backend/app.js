@@ -5,9 +5,14 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ Proper CORS config once — DO NOT duplicate
+// ✅ Determine environment and set allowed origins accordingly
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? ["https://task-manager-1-chi.vercel.app"]
+    : ["http://localhost:4200"];
+
 const corsOptions = {
-  origin: "http://localhost:4200",
+  origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -16,7 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // handle preflight requests
 
-// ✅ Logging middleware (can stay here)
+// ✅ Logging middleware
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
@@ -30,17 +35,14 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-// ✅ API routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/tasks", require("./routes/tasks"));
 
-// ✅ Error handler (last)
 app.use((err, req, res, next) => {
   console.error("❌ Error:", err.stack);
   res.status(500).send("Something broke!");
 });
 
-// ✅ Server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
