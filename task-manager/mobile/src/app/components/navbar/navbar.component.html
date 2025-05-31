@@ -1,0 +1,11 @@
+<nav class="navbar">
+  <a routerLink="/" class="logo">Task Tracker</a>
+
+  <div class="nav-links">
+    <a *ngIf="!isLoggedIn" routerLink="/login">Login</a>
+    <a *ngIf="!isLoggedIn" routerLink="/register">Register</a>
+
+    <a *ngIf="isLoggedIn" routerLink="/dashboard">Dashboard</a>
+    <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+  </div>
+</nav>

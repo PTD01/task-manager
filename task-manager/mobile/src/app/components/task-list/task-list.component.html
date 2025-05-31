@@ -1,0 +1,35 @@
+<h2>Your Tasks</h2>
+
+<form (ngSubmit)="editMode ? updateTask() : createTask()">
+  <input
+    type="text"
+    placeholder="Title"
+    [(ngModel)]="taskToEdit.title"
+    name="title"
+    required
+  />
+  <input
+    type="text"
+    placeholder="Description"
+    [(ngModel)]="taskToEdit.description"
+    name="description"
+  />
+  <button type="submit">{{ editMode ? "Update" : "Add" }} Task</button>
+  <button type="button" *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
+</form>
+
+<ul class="task-list">
+  <li *ngFor="let task of tasks" [class.completed]="task.completed">
+    <div class="task-info">
+      <h3>{{ task.title }}</h3>
+      <p>{{ task.description }}</p>
+    </div>
+    <div class="task-actions">
+      <button (click)="markComplete(task)">
+        {{ task.completed ? "Undo" : "Complete" }}
+      </button>
+      <button (click)="setEditTask(task)">Edit</button>
+      <button (click)="deleteTask(task._id!)">Delete</button>
+    </div>
+  </li>
+</ul>

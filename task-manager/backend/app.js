@@ -5,10 +5,11 @@ require("dotenv").config();
 
 const app = express();
 
-// CORS configuration for local and deployed frontends
+// ✅ CORS configuration: Add mobile app origin
 const allowedOrigins = [
-  "http://localhost:4200", // Local development (Angular default)
-  "https://task-manager-1-chi.vercel.app", // Production frontend
+  "http://localhost:4200", // Angular web app (dev)
+  "http://localhost:8100", // Ionic mobile app (dev)
+  "https://task-manager-1-chi.vercel.app", // Angular app (prod)
 ];
 
 const corsOptions = {
@@ -23,13 +24,13 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
-  optionsSuccessStatus: 204, // Ensure preflight returns 204 status
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handle preflight requests for all routes
+app.options("*", cors(corsOptions));
 
-// Logging middleware for debugging
+// Logging middleware
 app.use((req, res, next) => {
   console.log(
     `${new Date().toISOString()} - ${req.method} ${req.url} from ${
